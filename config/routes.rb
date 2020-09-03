@@ -1,3 +1,17 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  devise_for :users
+  root "articles#index"
+  resources :articles, only: [:index, :new, :create] do
+    collection do
+      get "notification"
+    end
+    member do
+      get "create_like"
+    end
+  end
+  resources :users, only: :show do
+    member do
+      get "follow"
+    end
+  end
 end
